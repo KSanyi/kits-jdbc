@@ -45,6 +45,15 @@ public class DatabaseClientTest extends DatabaseClientTestBase {
 	}
 	
 	@Test
+	public void dataEntryUpdate() {
+		new DatabaseClient(dataSource).updateEntry("EMPLOYER", new DataMap("NAME", "PWC Group", "ADDRESS", "Budapest 1075 Wesselenyi utca 20"), "EMPLOYER_ID", "EMP001");
+		
+		DataMap result = simpleDbClient.loadDataMap("SELECT * FROM EMPLOYER WHERE EMPLOYER_ID = 'EMP001'").get();
+		Assert.assertEquals("PWC Group", result.data("NAME"));
+		Assert.assertEquals("Budapest 1075 Wesselenyi utca 20", result.data("ADDRESS"));
+	}
+	
+	@Test
 	public void datadelete() {
 		Assert.assertTrue(simpleDbClient.loadDataMap("SELECT * FROM EMPLOYER WHERE EMPLOYER_ID = 'EMP001'").isPresent());
 		

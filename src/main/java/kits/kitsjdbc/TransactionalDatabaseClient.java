@@ -94,4 +94,21 @@ public class TransactionalDatabaseClient extends DatabaseClientBase {
 		}
 	}
 	
+	public void updateEntry(String tableName, DataMap values, String idColumnName, Object id)  {
+		checkTransactionStarted();
+		try {
+			updateEntry(connection, tableName, values, idColumnName, id);	
+		} catch(Throwable t) {
+			if(connection != null) {
+				try {
+					connection.rollback();
+					logger.debug("Transaction is rolled back");
+				} catch(SQLException ex) {
+					logger.error("Error rolling back transaction", ex);
+				}
+			}
+			throw t;
+		}
+	} 
+	
 }

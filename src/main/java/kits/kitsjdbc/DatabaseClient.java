@@ -82,6 +82,16 @@ public class DatabaseClient extends DatabaseClientBase {
 		}
 	}
 	
+	public void updateEntry(String tableName, DataMap values, String idColumnName, Object id)  {
+		try {
+			try(Connection connection = dataSource.getConnection()) {
+				updateEntry(connection, tableName, values, idColumnName, id);
+			}
+		} catch(SQLException ex) {
+			throw new RuntimeException("Error executing update", ex);
+		}
+	} 
+	
 	public void update(String updateString) {
 		update(updateString, new DataMap());
 	}

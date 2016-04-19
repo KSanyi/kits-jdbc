@@ -24,11 +24,11 @@ public class DatabaseClientTestBase {
 			// TABLE does not exist, no problem
 		}
 		
-		databaseClient.executeSql("CREATE TABLE EMPLOYER(EMPLOYER_ID VARCHAR(20), NAME VARCHAR(50))");
+		databaseClient.executeSql("CREATE TABLE EMPLOYER(EMPLOYER_ID VARCHAR(20), NAME VARCHAR(50), ADDRESS VARCHAR(100))");
 		databaseClient.executeSql("CREATE TABLE EMPLOYEE(EMPLOYEE_ID VARCHAR(20), NAME VARCHAR(50), BIRTHDATE DATE, EMPLOYER_ID VARCHAR(20), SALARY INT)");
 		
-		databaseClient.executeSql("INSERT INTO EMPLOYER VALUES('EMP001', 'PWC')");
-		databaseClient.executeSql("INSERT INTO EMPLOYER VALUES('EMP002', 'EY')");
+		databaseClient.executeSql("INSERT INTO EMPLOYER VALUES('EMP001', 'PWC', 'Budapest 1075 Wesselenyi utca 18')");
+		databaseClient.executeSql("INSERT INTO EMPLOYER VALUES('EMP002', 'EY', 'Budapest 1345 Kossuth utca 2')");
 		databaseClient.executeSql("INSERT INTO EMPLOYEE VALUES('E0001', 'John Smith', DATE('1994-02-23'), 'EMP001', 100000)");
 	}
 	

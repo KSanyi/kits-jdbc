@@ -68,6 +68,28 @@ abstract class DatabaseClientBase {
 		return String.join(", ", questionMarks);
 	}
 	
+	protected void updateEntry(Connection connection, String tableName, DataMap values, String idColumnName, Object id) {
+		try {
+			Set<String> columnNames = values.keys();
+			String updateString  = "UPDATE " + tableName + " SET " + String.join(", ", MapperHelper.mapToList(columnNames, c -> c + "=?")) + " WHERE " + idColumnName + "=?";
+			logger.debug("Updating entry (" + idColumnName + " = " + id + ") with sql: '" + updateString + "' and parameters: " + values);
+			try(PreparedStatement statement = connection.prepareStatement(updateString)){
+				int index = 1;
+				for(String columnName : columnNames) {
+					statement.setObject(index, transformToJdbcValue(values.data(columnName)));
+					index++;
+				}
+				statement.setObject(index, id);
+				int result = statement.executeUpdate();
+				if(result !=1) {
+					throw new IllegalArgumentException("Error updating entry. Updated rows: " + result + " <> 1");
+				}
+			}
+		} catch(SQLException e) {
+			throw new RuntimeException("Error executing update entry", e);
+		}
+	}
+	
 	protected int update(Connection connection, String updateSqlString, DataMap parameters) {
 		PreparedStatement statement = null;
 		try {
