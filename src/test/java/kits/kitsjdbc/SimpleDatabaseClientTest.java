@@ -34,8 +34,8 @@ public class SimpleDatabaseClientTest extends DatabaseClientTestBase {
 	public void multipleDataLoad() {
 		List<DataMap> dataMaps = simpleDatabaseClient.loadDataMapList("SELECT * FROM EMPLOYER ORDER BY EMPLOYER_ID");
 		Assert.assertEquals(2, dataMaps.size());
-		Assert.assertEquals(new DataMap("EMPLOYER_ID", "EMP001", "NAME", "PWC"), dataMaps.get(0));
-		Assert.assertEquals(new DataMap("EMPLOYER_ID", "EMP002", "NAME", "EY"), dataMaps.get(1));
+		Assert.assertEquals(new DataMap("EMPLOYER_ID", "EMP001", "NAME", "PWC", "ADDRESS", "Budapest 1075 Wesselenyi utca 18"), dataMaps.get(0));
+		Assert.assertEquals(new DataMap("EMPLOYER_ID", "EMP002", "NAME", "EY", "ADDRESS", "Budapest 1345 Kossuth utca 2"), dataMaps.get(1));
 	}
 	
 	@Test
